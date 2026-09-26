@@ -1,0 +1,10 @@
+{
+  "name": "訪問営業",
+  "short_name": "訪問営業",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1d6fe0",
+  "icons": [{ "src": "icon.png", "sizes": "180x180", "type": "image/png" }]
+}

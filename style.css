@@ -1,0 +1,356 @@
+/* style.css ── 訪問営業システム iPhone側の見た目。
+   タスク指示の必須事項:片手操作/結果ボタン56px以上/基本17px/入力欄16px以上(iOSの自動拡大を防ぐ)/
+   セーフエリア(viewport-fit=cover + env(safe-area-inset-*))。装飾は最小限にする(過剰実装を避ける)。
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Hiragino Sans", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  background: #fafafa;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+#app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+h1 {
+  font-size: 20px;
+  margin: 8px 0;
+}
+
+h2,
+.section-title {
+  font-size: 15px;
+  color: #555;
+  margin: 16px 0 4px;
+}
+
+p {
+  margin: 4px 0;
+}
+
+/* ---- 共通ボタン ---- */
+.btn {
+  display: inline-block;
+  padding: 12px 14px;
+  margin: 4px 4px 4px 0;
+  border-radius: 10px;
+  background: #1d6fe0;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  border: 0;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  min-height: 44px;
+}
+.btn:disabled {
+  background: #a9c4ec;
+  color: #eee;
+}
+.btn.small {
+  padding: 8px 10px;
+  font-size: 14px;
+  min-height: 36px;
+  background: #888;
+}
+.btn.as-button {
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  padding: 0;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+/* ---- 帯・注意書き ---- */
+.banner {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #e8f0fe;
+  margin: 8px 0;
+  font-weight: 600;
+}
+.banner.warn {
+  background: #fdecea;
+  color: #a51b13;
+}
+.banner.fictional {
+  background: #fff4d6;
+  color: #7a5b00;
+  text-align: center;
+  font-weight: 700;
+}
+
+.count-line,
+.today-count {
+  font-weight: 600;
+}
+.not-received {
+  color: #555;
+}
+.not-received.warn {
+  color: #a51b13;
+  font-weight: 700;
+}
+.small-note {
+  font-size: 13px;
+  color: #777;
+}
+
+.empty-state {
+  padding: 24px 8px;
+  text-align: center;
+}
+
+/* ---- 一覧の行 ---- */
+.section {
+  margin-bottom: 12px;
+}
+.row-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.row-list.collapsed {
+  display: none;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+}
+.row:last-child {
+  border-bottom: none;
+}
+.row[data-action="open-record"] {
+  cursor: pointer;
+}
+.row-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.row-name {
+  font-size: 17px;
+  font-weight: 600;
+}
+.row-industry,
+.row-result {
+  font-size: 13px;
+  color: #666;
+}
+.row-sub {
+  font-size: 13px;
+  color: #666;
+}
+.row-leg {
+  font-size: 12px;
+  color: #1d6fe0;
+}
+.row-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  background: #eee;
+  color: #555;
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+/* 今日記録した会社:結果ごとに色を変える(D1 #3) */
+.row[data-result="不在"] { background: #f3f3f3; }
+.row[data-result="門前払い"] { background: #fdecea; }
+.row[data-result="名刺のみ"] { background: #fff8e1; }
+.row[data-result="話せた"] { background: #e6f4ea; }
+.row[data-result="再訪約束"] { background: #e8f0fe; }
+
+.toggle {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 15px;
+  color: #555;
+  padding: 8px 4px;
+}
+
+/* ---- 記録画面 ---- */
+.record-head {
+  margin-bottom: 8px;
+}
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.today-mini {
+  margin: 8px 0;
+}
+.today-mini .row.editing {
+  outline: 2px solid #1d6fe0;
+}
+
+.extra-fields {
+  margin: 12px 0;
+  padding: 8px;
+  background: #fff;
+  border-radius: 10px;
+}
+.field-group {
+  margin-bottom: 10px;
+}
+.field-label {
+  display: block;
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 4px;
+}
+.choice-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.choice-btn {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 15px;
+  min-height: 36px;
+}
+.choice-btn.selected {
+  background: #1d6fe0;
+  color: #fff;
+  border-color: #1d6fe0;
+}
+
+textarea,
+input[type="text"],
+input[type="url"],
+input[type="datetime-local"] {
+  width: 100%;
+  font-size: 16px; /* iOSの自動拡大を防ぐ(16px以上) */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+/* ---- 結果ボタン(片手操作・56px以上・画面下) ---- */
+.result-grid {
+  position: sticky;
+  bottom: 0;
+  background: #fafafa;
+  padding-top: 8px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.result-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.result-btn {
+  flex: 1;
+  min-height: 56px;
+  font-size: 17px;
+  border-radius: 12px;
+}
+.result-btn.big {
+  min-height: 64px;
+  font-size: 19px;
+}
+.result-btn[data-result="不在"] { background: #6b6b6b; }
+.result-btn[data-result="門前払い"] { background: #b23a2e; }
+.result-btn[data-result="名刺のみ"] { background: #b8860b; }
+.result-btn[data-result="話せた"] { background: #1e8e3e; }
+.result-btn[data-result="再訪約束"] { background: #1d6fe0; }
+
+/* ---- 確認ダイアログ(取り消し・あとから) ---- */
+.confirm-box {
+  background: #fff8e1;
+  border: 1px solid #e0c15a;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+/* ---- 通知(トースト。画面の上) ---- */
+.toast {
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a1a;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+  max-width: 90vw;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.toast[hidden] {
+  display: none;
+}
+
+/* 候補の行は縦に積む(商号を1行目に全幅で出す。バッジや時間帯の行で商号が細くならないように) */
+.row[data-action="open-record"] {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+}
+
+/* 記録の画面は画面の高さいっぱいに取り、結果のボタンを下(親指の届く所)に置く(設計§4-2)。
+   中身が長いときは .result-grid の sticky で画面の下に留まる。 */
+.record-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+}
+.record-screen .result-grid {
+  margin-top: auto;
+}
+
+/* 知らせは中身の幅に合わせ、画面の9割を超えたら折り返す(left:50% のせいで幅が半分に縮むのを防ぐ) */
+.toast {
+  width: max-content;
+}
+.toast button {
+  white-space: nowrap;
+  flex-shrink: 0;
+}

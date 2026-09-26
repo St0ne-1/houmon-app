@@ -35,7 +35,7 @@ import {
 import { Store, readMode, writeMode } from "./store.js";
 
 // app.js と sw.js の版は一致させる(単体テストで確かめる。設計§10)。
-export const APP_VERSION = "0.1.0";
+export const APP_VERSION = "0.1.1";
 
 // ---- 動きに関わる既定値(★Claudeが決めた細部。数値はここだけ直せばよい) ----
 const DEFAULT_DAILY_TARGET = 50; // REQ-012 の既定
@@ -788,8 +788,7 @@ function topBarHtml() {
       <button type="button" class="btn" data-action="export">${MESSAGES.btnExport}</button>
       <label class="btn" for="file-input">${MESSAGES.btnImport}</label>
       <button type="button" class="btn" data-action="about">${MESSAGES.btnAbout}</button>
-    </div>
-    <input type="file" id="file-input" accept=".json,application/json" hidden>`;
+    </div>`;
 }
 
 function candidateRowHtml(candidate, legMeters) {
@@ -1122,6 +1121,15 @@ function wireEvents() {
       if (ev.target.closest('[data-action="toast-undo"]')) handleImmediateUndo(state.toast.visitId);
     });
   }
+  // ファイルの選択欄は index.html に固定で置いてある(#app の描き直しで消えないように)。
+  const fileInput = document.getElementById("file-input");
+  if (fileInput) {
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files && fileInput.files[0];
+      fileInput.value = ""; // 同じファイルをもう一度選んでも読めるように
+      if (file) handleFileChosen(file);
+    });
+  }
 }
 
 function onAppClick(ev) {
@@ -1196,11 +1204,6 @@ function onAppClick(ev) {
 }
 
 function onAppChange(ev) {
-  if (ev.target && ev.target.id === "file-input") {
-    const file = ev.target.files && ev.target.files[0];
-    if (file) handleFileChosen(file);
-    return;
-  }
   if (ev.target && ev.target.dataset && ev.target.dataset.action === "field-revisit") {
     handleRevisitChange(ev.target.value);
   }

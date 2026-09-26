@@ -4,7 +4,7 @@
  * アプリのファイル一式を端末に置いておく。版が変わったら古いキャッシュを入れ替える。
  * CACHE の版は app.js の APP_VERSION と同じ値にする(単体テスト tests/version.test.js で確認)。
  */
-const CACHE = "houmon-app-v0.1.0";
+const CACHE = "houmon-app-v0.1.1";
 const FILES = [
   "./",
   "index.html",
